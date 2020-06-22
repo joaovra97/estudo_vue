@@ -8,7 +8,7 @@ namespace ProjectSchool_API.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         public DbSet<Aluno> Alunos { get; set; }
-        public DbSet<Professor> Professors { get; set; }
+        public DbSet<Professor> Professores { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

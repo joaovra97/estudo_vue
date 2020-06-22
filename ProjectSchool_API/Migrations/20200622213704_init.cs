@@ -7,7 +7,7 @@ namespace ProjectSchool_API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Professors",
+                name: "Professores",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -16,7 +16,7 @@ namespace ProjectSchool_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Professors", x => x.Id);
+                    table.PrimaryKey("PK_Professores", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -34,25 +34,25 @@ namespace ProjectSchool_API.Migrations
                 {
                     table.PrimaryKey("PK_Alunos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Alunos_Professors_ProfessorId",
+                        name: "FK_Alunos_Professores_ProfessorId",
                         column: x => x.ProfessorId,
-                        principalTable: "Professors",
+                        principalTable: "Professores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "Professors",
+                table: "Professores",
                 columns: new[] { "Id", "Nome" },
                 values: new object[] { 1, "Vinícius" });
 
             migrationBuilder.InsertData(
-                table: "Professors",
+                table: "Professores",
                 columns: new[] { "Id", "Nome" },
                 values: new object[] { 2, "Paula" });
 
             migrationBuilder.InsertData(
-                table: "Professors",
+                table: "Professores",
                 columns: new[] { "Id", "Nome" },
                 values: new object[] { 3, "Luna" });
 
@@ -83,7 +83,7 @@ namespace ProjectSchool_API.Migrations
                 name: "Alunos");
 
             migrationBuilder.DropTable(
-                name: "Professors");
+                name: "Professores");
         }
     }
 }

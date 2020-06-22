@@ -77,7 +77,7 @@ namespace ProjectSchool_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Professors");
+                    b.ToTable("Professores");
 
                     b.HasData(
                         new

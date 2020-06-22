@@ -8,7 +8,7 @@ using ProjectSchool_API.Data;
 namespace ProjectSchool_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200622133911_init")]
+    [Migration("20200622213704_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,7 +79,7 @@ namespace ProjectSchool_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Professors");
+                    b.ToTable("Professores");
 
                     b.HasData(
                         new
