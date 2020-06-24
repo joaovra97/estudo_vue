@@ -36,11 +36,11 @@
           <td class="colPequeno">Professor:</td>
           <td>
             <label v-if="visualizando">{{aluno.professor.nome}}</label>
-            <select v-else v-model="alunoEdicao.professor">
+            <select v-else v-model="alunoEdicao.professor.id">
               <option
                 v-for="(professor, index) in professores"
                 :key="index"
-                :value="professor"
+                :value="professor.id"
               >{{professor.nome}}</option>
             </select>
           </td>
@@ -68,14 +68,14 @@ export default {
   data() {
     return {
       professores: [],
-      aluno: { professor: { nome: "" } },
+      aluno: { professor: { nome: "", id: 0 } },
       alunoEdicao: {},
       visualizando: true
     };
   },
   beforeCreate() {
     this.$http
-      .get(`http://localhost:3000/alunos/${this.$route.params.id}`)
+      .get(`http://localhost:5000/api/alunos/${this.$route.params.id}`)
       .then(res => res.json())
       .then(aluno => {
         this.aluno = aluno;
@@ -83,7 +83,7 @@ export default {
       });
 
     this.$http
-      .get("http://localhost:3000/professores")
+      .get("http://localhost:5000/api/professores")
       .then(res => res.json())
       .then(professores => (this.professores = professores));
   },
@@ -97,11 +97,14 @@ export default {
     },
     salvar() {
       this.visualizando = !this.visualizando;
+      this.alunoEdicao.professor = this.professores.find(p => p.id == this.alunoEdicao.professor.id);
+      this.alunoEdicao.professorId = this.alunoEdicao.professor.id;
       this.$http
-        .put(`http://localhost:3000/alunos/${this.aluno.id}`, this.alunoEdicao)
+        .put(`http://localhost:5000/api/alunos/${this.aluno.id}`, this.alunoEdicao)
         .then(res => res.json())
-        .then(aluno => {
+        .then(aluno => {          
           this.aluno = aluno;
+          this.aluno.professor = this.professores.find(p => p.id == this.alunoEdicao.professor.id);
           this.preparaAlunoEdicao();
         });
     },
@@ -111,8 +114,11 @@ export default {
         sobrenome: this.aluno.sobrenome,
         dataNasc: this.aluno.dataNasc,
         id: this.aluno.id,
-        professor: this.aluno.professor
+        professor: (this.aluno.professor == null ? this.professores.find(p => p.id == this.alunoEdicao.professor.id) : this.aluno.professor),
+        professorId: this.aluno.professorId
       };
+
+      console.log(this.alunoEdicao);
     }
   }
 };

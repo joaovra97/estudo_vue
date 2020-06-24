@@ -25,6 +25,7 @@ namespace ProjectSchool_API
 
         public IConfiguration Configuration { get; }
 
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -33,8 +34,17 @@ namespace ProjectSchool_API
             );
             services.AddControllers().AddNewtonsoftJson().
                 AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
-            
+
             services.AddScoped<IRepository, Repository>();
+
+            services.AddCors(options => {
+                options.AddDefaultPolicy( builder => {
+                        builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                    }
+                );
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +58,8 @@ namespace ProjectSchool_API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
